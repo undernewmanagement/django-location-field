@@ -22,7 +22,7 @@ It was only tested with PostGIS but may work with other Spatial Databases.
 
 1. Install through pip (or manually place it on your `PYTHON_PATH`).
 
-    `pip install git+http://github.com/codasus/django-location-field#egg=location_field`
+    `pip install django-location-field`
 
 2. Create a Spatial Database
 
@@ -37,6 +37,7 @@ See the [example project](example_project/).
 **Basic usage (using Spatial Database)**
 
     from django.contrib.gis.db import models
+    from django.contrib.gis.geos import Point
     from location_field.models import LocationField
 
     class Place(models.Model):

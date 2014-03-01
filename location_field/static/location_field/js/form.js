@@ -1,5 +1,5 @@
 ($ || django.jQuery)(function($){
-    function location_field_load(map, location_based, zoom)
+    function location_field_load(map, location_based, zoom, suffix)
     {
         var parent = map.parent().parent();
 
@@ -9,8 +9,14 @@
 
         function savePosition(point)
         {
-            location_coordinate.val(point.lat().toFixed(6) + "," + point.lng().toFixed(6));
-            location_map.panTo(point);
+            if (point) {
+                location_coordinate.val(point.lat().toFixed(6) + "," + point.lng().toFixed(6));
+                location_map.panTo(point);
+            }
+            else {
+                var point = new google.maps.LatLng(1, 1);
+                location_map.panTo(point)
+            }
         }
 
         function load() {
@@ -68,6 +74,9 @@
                             else
                                 lstr.push(b.val())
                         });
+
+                        if (lstr.length > 0 && suffix != '') 
+                            lstr.push(suffix);
 
                         geocode(lstr.join(','), function(l){
                             location_coordinate.val(l.lat()+','+l.lng());
@@ -137,8 +146,9 @@
 
         var $map = $($el.attr('data-map')),
             $based_fields = $($el.attr('data-based-fields')),
-            zoom = parseInt($el.attr('data-zoom'));
+            zoom = parseInt($el.attr('data-zoom')),
+            suffix = $el.attr('data-suffix');
 
-        location_field_load($map, $based_fields, zoom);
+        location_field_load($map, $based_fields, zoom, suffix);
     });
 });

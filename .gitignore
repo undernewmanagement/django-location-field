@@ -1,2 +1,11 @@
 .DS_Store
+
 *.pyc
+
+# Useful for testing
+example_project/.venv
+
+# pypi specific
+MANIFEST
+dist
+build
