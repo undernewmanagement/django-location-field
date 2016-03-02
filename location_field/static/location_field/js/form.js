@@ -1,4 +1,36 @@
 ($ || django.jQuery)(function($){
+
+var autocomplete;
+
+function initialize() {
+  // Create the autocomplete object, restricting the search
+  // to geographical location types.
+  autocomplete = new google.maps.places.Autocomplete(
+      (document.getElementById('id_full_address')),
+      { types: ['geocode'] });
+  // When the user selects an address from the dropdown,
+  // populate the address fields in the form.
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    fillInAddress();
+  });
+}
+
+// [START region_fillform]
+function fillInAddress() {
+  // Get the place details from the autocomplete object.
+  var place = autocomplete.getPlace();
+
+  $('#id_place_id').val(place.place_id);
+  $('#id_latitude').val(place.geometry.location.lat());
+  $('#id_longitude').val(place.geometry.location.lng());
+  console.log(place);
+}
+// [END region_fillform]
+
+    // end sheraz
+
+
+
     function location_field_load(map, location_based, zoom, suffix)
     {
         var parent = map.parent().parent();
@@ -172,5 +204,9 @@
             suffix = values.suffix;
 
         location_field_load($map, $based_fields, zoom, suffix);
+
     });
+
+    initialize();   
+
 });
